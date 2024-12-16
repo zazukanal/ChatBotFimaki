@@ -2,7 +2,7 @@ import json
 import requests
 import os
 from openai import OpenAI
-from assistant_insturctions import assistant_instructions
+from assistant_instructions import assistant_instructions
 from dotenv import load_dotenv, dotenv_values
 
 load_dotenv()
@@ -12,7 +12,7 @@ client = OpenAI()
 
 # Add lead to Airtable
 def create_lead(name="", company_name="", phone="", email=""):
-  url = "https://api.airtable.com/v0/appEH432PCXidCD7Y/Leads"  # Change this to your Airtable API URL
+  url = "https://api.airtable.com/v0/appxw9Xs3duyir4Lq/Leads"  # Change this to your Airtable API URL
   headers = {
       "Authorization" : 'Bearer ' + dotenv_values().get("AIRTABLE_API_KEY"),
       "Content-Type": "application/json"
@@ -91,8 +91,8 @@ def create_assistant(client):
                     }
                 }
             }
-        ],
-        file_ids=[file.id])
+        ], file_ids=[file.id])
+
 
     # Create a new assistant.json file to load on future runs
     with open(assistant_file_path, 'w') as file:
