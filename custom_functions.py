@@ -56,7 +56,7 @@ def create_assistant(client):
     assistant = client.beta.assistants.create(
         # Getting assistant prompt from "prompts.py" file, edit on left panel if you want to change the prompt
         instructions=assistant_instructions,
-        model="gpt-4-turbo",temperature=0.7,
+        model="gpt-4-turbo",
         tools=[
             {
                 "type": "retrieval"  # This adds the knowledge base as a tool
@@ -91,8 +91,8 @@ def create_assistant(client):
                     }
                 }
             }
-        ], file_ids=[file.id]),
-
+        ],
+        file_ids=[file.id])
 
     # Create a new assistant.json file to load on future runs
     with open(assistant_file_path, 'w') as file:
