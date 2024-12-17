@@ -2,6 +2,8 @@ import json
 import requests
 import os
 from openai import OpenAI
+
+
 from assistant_instructions import assistant_instructions
 from dotenv import load_dotenv, dotenv_values
 
@@ -55,11 +57,14 @@ def create_assistant(client):
 
     assistant = client.beta.assistants.create(
         # Getting assistant prompt from "prompts.py" file, edit on left panel if you want to change the prompt
+        name="FimakAI",
         instructions=assistant_instructions,
-        model="gpt-4-turbo",
-        tools=[
+        model="gpt-4o-mini",
+        tools=[{
+        "type": "code_interpreter"
+            },
             {
-                "type": "retrieval"  # This adds the knowledge base as a tool
+                "type": "file_search"  # This adds the knowledge base as a tool
             },
             {
                 "type": "function",  # This adds the lead capture as a tool
@@ -91,8 +96,19 @@ def create_assistant(client):
                     }
                 }
             }
-        ],
-        file_ids=[file.id])
+        ],tool_resources={
+
+                "code_interpreter":
+                    {
+                     "file_ids": [file.id]
+                    }
+
+    }
+
+
+    )
+
+
 
     # Create a new assistant.json file to load on future runs
     with open(assistant_file_path, 'w') as file:
